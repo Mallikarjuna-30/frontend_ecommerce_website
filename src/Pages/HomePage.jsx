@@ -1,12 +1,12 @@
 import React from 'react'
 import Navbar from '../Components/Navbar'
+import ImageSlide from '../Components/ImageSlide'
 
 const HomePage = () => {
     return (
-        <div>
+        <div className='w-screen h-full'>
             <Navbar />
-            <h1 className='text-4xl font-bold text-center mt-10'>Welcome to our store!</h1>
-            <p className='text-center mt-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+            <ImageSlide />
         </div>
     )
 }
