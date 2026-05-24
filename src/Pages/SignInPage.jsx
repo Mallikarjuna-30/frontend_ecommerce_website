@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import LoginDetails from '../Components/LoginDetails'
+import SignUpDetails from '../Components/SignUpDetails'
 
-const LoginPage = () => {
+const SignInPage = () => {
     return (
         <div className='flex min-h-screen w-full bg-gray-200 items-center justify-center p-5'>
             <div className='flex flex-col text-black h-full w-full justify-center items-center'>
@@ -14,11 +14,11 @@ const LoginPage = () => {
                     <Link to="/" className='p-2 text-black font-semibold text-2xl'>Ecommerce</Link>
                 </div>
                 <div className='flex w-full h-full gap-5'>
-                    <LoginDetails />
+                    <SignUpDetails />
                 </div>
             </div>
         </div>
     )
 }
 
-export default LoginPage
+export default SignInPage
