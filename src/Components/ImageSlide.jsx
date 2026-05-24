@@ -14,8 +14,8 @@ const ImageSlide = () => {
     }, []);
     return (
         <div>
-            <div className="w-full flex justify-center mt-5">
-                <div className="relative w-[85%] h-[500px] md:h-[550px] overflow-hidden rounded-xl mt-10">
+            <div className="w-full flex justify-center mt-1">
+                <div className="relative w-[75%] h-[400px] md:h-[475px] overflow-hidden rounded-xl mt-10">
                     {/* Slides */}
                     <div
                         className="flex transition-transform duration-700 ease-in-out h-full"
