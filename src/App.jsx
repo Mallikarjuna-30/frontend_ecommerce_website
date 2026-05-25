@@ -6,7 +6,7 @@ import SignInPage from './Pages/SignInPage';
 
 const App = () => {
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen overflow-x-hidden">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
