@@ -1,23 +1,28 @@
 import React from 'react'
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import products from '../Data/products'
 import Navbar from '../Components/Navbar'
 import ProductsArea from './ProductsArea'
+import Footer from '../Components/Footer'
 
 const ProductDetailPage = () => {
     const [selectedSize, setSelectedSize] = useState()
     const { id } = useParams()
     const product = products.find((item) => item.id == id)
+    const location = useLocation()
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [id])
     return (
-        <div className='h-screen w-full'>
+        <div className='min-h-screen w-full'>
             <Navbar />
             <div className='px-10 top-0 mt-3'>
                 <div className='grid md:grid-cols-2 gap-10 ml-4'>
                     <img
                         src={product.image}
                         alt={product.name}
-                        className='ml-8 w-[85%] h-[85%] object-cover rounded-xl'
+                        className='w-full max-w-[500px] h-auto object-cover rounded-xl ml-10'
                     />
                     <div className='w-full mt-8'>
                         <h1 className='text-4xl font-semibold'>
@@ -38,9 +43,10 @@ const ProductDetailPage = () => {
                         {['S', 'M', 'L', 'XL'].map((size) => (
                             <button
                                 key={size}
-                                className={`border border-gray-400 px-3 py-1 rounded-md text-sm hover:bg-black hover:text-white transition mt-3 mr-2 ${size === selectedSize ? 'bg-black text-white' : ''}`}
+                                className={`border border-gray-400 px-3 py-1 rounded-md text-sm cursor-pointer hover:bg-black hover:text-white transition mt-3 mr-2 ${size === selectedSize ? 'bg-black text-white' : ''}`}
                                 onClick={() => {
-                                    setSelectedSize(size)
+                                    setSelectedSize(size),
+                                        window.scrollTo(0, 0)
                                 }}
                                 style={{
                                     backgroundColor: size === selectedSize ? 'black' : 'white',
@@ -60,11 +66,11 @@ const ProductDetailPage = () => {
                                 Premium quality t-shirt with stylish design and comfortable fabric.
                             </p>
                         </div>
-
                     </div>
                 </div>
             </div>
             <ProductsArea />
+            <Footer />
         </div>
     )
 }

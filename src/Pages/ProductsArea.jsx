@@ -8,7 +8,7 @@ const ProductsArea = () => {
         navigate(`/product/${id}`)
     }
     return (
-        <div className='w-full h-screen p-8 overflow-x-hidden'>
+        <div className='w-full min-h-screen p-8 overflow-x-hidden'>
             <h1 className='text-3xl font-bold text-gray-800 mb-8'>
                 Trending T-Shirts
             </h1>

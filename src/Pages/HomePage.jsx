@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../Components/Navbar'
 import ImageSlide from '../Components/ImageSlide'
 import ProductsArea from './ProductsArea'
+import Footer from '../Components/Footer'
 const HomePage = () => {
     return (
         <div className='w-screen h-full'>
@@ -12,6 +13,7 @@ const HomePage = () => {
                 <p className='text-lg mt-2 text-gray-600 font-medium'>“Discover the latest trends at unbeatable prices.”</p>
             </div>
             <ProductsArea />
+            <Footer />
         </div>
     )
 }
