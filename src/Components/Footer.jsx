@@ -20,7 +20,9 @@ const Footer = () => {
                     <FaSquareInstagram className='text-2xl cursor-pointer transition rounded-[50%]' />
                     <FaSquareXTwitter className='text-2xl cursor-pointer transition rounded-[50%]' />
                     <FaSquareFacebook className='text-2xl cursor-pointer transition rounded-[50%]' />
-                    <FaSquareGithub className='text-2xl cursor-pointer transition rounded-[50%]' />
+                    <a href="https://github.com/Mallikarjuna-30">
+                        <FaSquareGithub className='text-2xl cursor-pointer transition rounded-[50%]' />
+                    </a>
                 </div>
             </div>
         </div>

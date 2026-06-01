@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useLocation, useParams } from 'react-router-dom'
 import products from '../Data/products'
 import Navbar from '../Components/Navbar'
@@ -7,13 +8,21 @@ import ProductsArea from './ProductsArea'
 import Footer from '../Components/Footer'
 
 const ProductDetailPage = () => {
+    const navigate = useNavigate()
     const [selectedSize, setSelectedSize] = useState()
     const { id } = useParams()
     const product = products.find((item) => item.id == id)
-    const location = useLocation()
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [id])
+    const handleProductClick = (id) => {
+        navigate(`/product/${id}`)
+        useEffect(() => {
+            window.scrollTo(0, 0);
+        }, [id]);
+    }
+    const relatedProducts = products.filter(
+        (item) =>
+            item.category === product.category &&
+            item.id !== product.id
+    );
     return (
         <div className='min-h-screen w-full'>
             <Navbar />
@@ -69,7 +78,34 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <ProductsArea />
+            <div className="related-products m-12 px-4">
+                <h2 className="text-2xl font-bold mb-6">
+                    You May Also Like
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {relatedProducts.slice(0, 4).map((item) => (
+                        <div
+                            key={item.id}
+                            className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+                        >
+                            <img
+                                src={item.image}
+                                alt={item.title}
+                                className="w-full h-64 object-cover"
+                                onClick={() => handleProductClick(item.id)}
+                            />
+                            <div className="p-4">
+                                <h3 className="font-semibold text-lg line-clamp-2">
+                                    {item.title}
+                                </h3>
+                                <p className="text-green-600 font-bold mt-2">
+                                    ₹{item.price}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
             <Footer />
         </div>
     )
