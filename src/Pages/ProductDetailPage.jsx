@@ -24,7 +24,7 @@ const ProductDetailPage = () => {
             item.id !== product.id
     );
     return (
-        <div className='min-h-screen w-full'>
+        <div className='min-h-screen w-full gap-10'>
             <Navbar />
             <div className='px-10 top-0 mt-3'>
                 <div className='grid md:grid-cols-2 gap-10 ml-4'>
@@ -78,7 +78,7 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="related-products m-12 px-4">
+            <div className="related-products mt-12 mb-6 ml-12 px-4">
                 <h2 className="text-2xl font-bold mb-6">
                     You May Also Like
                 </h2>
@@ -90,16 +90,16 @@ const ProductDetailPage = () => {
                         >
                             <img
                                 src={item.image}
-                                alt={item.title}
+                                alt={item.name}
                                 className="w-full h-64 object-cover"
                                 onClick={() => handleProductClick(item.id)}
                             />
                             <div className="p-4">
-                                <h3 className="font-semibold text-lg line-clamp-2">
-                                    {item.title}
+                                <h3 className="font-semibold text-lg">
+                                    {item.name}
                                 </h3>
                                 <p className="text-green-600 font-bold mt-2">
-                                    ₹{item.price}
+                                    {item.price}
                                 </p>
                             </div>
                         </div>

@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
 /* Hide scrollbar for Chrome, Safari and Edge */
 ::-webkit-scrollbar {
     display: none;

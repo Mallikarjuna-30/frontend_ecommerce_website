@@ -18,8 +18,12 @@ const Footer = () => {
                 </div>
                 <div className='flex space-x-10 mt-6'>
                     <FaSquareInstagram className='text-2xl cursor-pointer transition rounded-[50%]' />
-                    <FaSquareXTwitter className='text-2xl cursor-pointer transition rounded-[50%]' />
-                    <FaSquareFacebook className='text-2xl cursor-pointer transition rounded-[50%]' />
+                    <a href="https://x.com/Mallikarjuna_30">
+                        <FaSquareXTwitter className='text-2xl cursor-pointer transition rounded-[50%]' />
+                    </a>
+                    <a href="">
+                        <FaSquareFacebook className='text-2xl cursor-pointer transition rounded-[50%]' />
+                    </a>
                     <a href="https://github.com/Mallikarjuna-30">
                         <FaSquareGithub className='text-2xl cursor-pointer transition rounded-[50%]' />
                     </a>
