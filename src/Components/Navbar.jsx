@@ -18,7 +18,7 @@ const Navbar = () => {
                     <div className='nav-links flex gap-5 text-lg font-medium mr-10'>
                         <Link to="/" className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer">Home</Link>
                         <Link onClick={scrollToProducts} className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer">Products</Link>
-                        <Link to="#" className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer">Cart</Link>
+                        <Link to="/cart" className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer">Cart</Link>
                         <Link to="/login" className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full cursor-pointer">Login</Link>
                     </div>
                 </div>
