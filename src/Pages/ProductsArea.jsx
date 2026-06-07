@@ -17,14 +17,14 @@ const ProductsArea = () => {
                     {products.map((item) => (
                         <div
                             key={item.id}
-                            className='bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group cursor-pointer'
+                            className='bg-white hover:shadow-xl transition duration-300 overflow-hidden group cursor-pointer'
                         >
                             {/* Image Section */}
                             <div className='relative overflow-hidden' onClick={() => handleProductClick(item.id)}>
                                 <img
                                     src={item.image}
                                     alt={item.name}
-                                    className='w-full h-[300px] object-cover transition duration-500 group-hover:scale-105'
+                                    className='w-full h-[350px] object-cover transition duration-500 group-hover:scale-105'
                                 />
                             </div>
                             {/* Product Details */}

@@ -1,17 +1,17 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import products from '../Data/products'
 import Navbar from '../Components/Navbar'
-import ProductsArea from './ProductsArea'
 import Footer from '../Components/Footer'
-
+import { CartContext } from '../Context/CartContext.jsx'
 const ProductDetailPage = () => {
     const navigate = useNavigate()
     const [selectedSize, setSelectedSize] = useState()
     const { id } = useParams()
     const product = products.find((item) => item.id == id)
+    const { addtoCart } = useContext(CartContext)
     const handleProductClick = (id) => {
         navigate(`/product/${id}`)
         useEffect(() => {
@@ -67,7 +67,7 @@ const ProductDetailPage = () => {
                         ))}
 
                         <div>
-                            <button className='mt-8 bg-black text-white px-6 py-3 rounded-lg'>
+                            <button className='mt-8 bg-black text-white px-6 py-3 rounded-lg cursor-pointer' onClick={() => addtoCart(product)}>
                                 Add To Cart
                             </button>
                             <p className='text-gray-600 mt-10 w-[80%]'>
@@ -91,7 +91,7 @@ const ProductDetailPage = () => {
                             <img
                                 src={item.image}
                                 alt={item.name}
-                                className="w-full h-64 object-cover"
+                                className="w-full h-[350px] object-cover"
                                 onClick={() => handleProductClick(item.id)}
                             />
                             <div className="p-4">
