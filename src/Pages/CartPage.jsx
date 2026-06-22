@@ -10,6 +10,9 @@ const CartPage = () => {
     const handleClick = () => {
         navigate("/")
     }
+    const handleCheckout = () => {
+        navigate("/checkout")
+    }
 
     return (
         <div className='w-full h-screen'>
@@ -92,7 +95,7 @@ const CartPage = () => {
                         <div className="flex flex-col gap-5 p-5 bg-white rounded-xl shadow-md sticky top-10 h-fit mr-5 w-[25vw]">
                             <h2 className='text-xl font-semibold w-full text-center'>Cart Summary</h2>
                             <p className='w-full'>Subtotal: ₹{cart.reduce((total, item) => total + Number(item.price.replace("₹", "")) * item.quantity, 0)}</p>
-                            <button className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer">Checkout</button>
+                            <button className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer" onClick={() => handleCheckout()}>Checkout</button>
                         </div>
                     </div>
             }

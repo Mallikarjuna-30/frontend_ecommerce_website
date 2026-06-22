@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 const Navbar = () => {
     const scrollToProducts = () => {
         const products = document.getElementById("products")

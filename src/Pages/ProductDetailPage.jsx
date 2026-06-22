@@ -53,7 +53,7 @@ const ProductDetailPage = () => {
                         </p>
                         <p className='text-sm text-gray-500 mt-2'>
                             incl. of taxes
-                            <span>
+                            <span   >
                                 (Also includes all applicable duties)
                             </span>
                         </p>
