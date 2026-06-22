@@ -8,7 +8,7 @@ import Footer from '../Components/Footer'
 import { CartContext } from '../Context/CartContext.jsx'
 const ProductDetailPage = () => {
     const navigate = useNavigate()
-    const [selectedSize, setSelectedSize] = useState()
+    const [selectedSize, setSelectedSize] = useState("")
     const { id } = useParams()
     const product = products.find((item) => item.id == id)
     const { addtoCart } = useContext(CartContext)
@@ -23,6 +23,17 @@ const ProductDetailPage = () => {
             item.category === product.category &&
             item.id !== product.id
     );
+    const handleToCart = () => {
+        if (!selectedSize) {
+            alert("Select Size !")
+            return
+        }
+        addtoCart({
+            ...product,
+            size: selectedSize,
+            quantity: 1
+        });
+    }
     return (
         <div className='min-h-screen w-full gap-10'>
             <Navbar />
@@ -42,9 +53,9 @@ const ProductDetailPage = () => {
                         </p>
                         <p className='text-sm text-gray-500 mt-2'>
                             incl. of taxes
-                            <p>
+                            <span>
                                 (Also includes all applicable duties)
-                            </p>
+                            </span>
                         </p>
                         <p className='mt-5 text-gray-600'>
                             Size
@@ -65,9 +76,12 @@ const ProductDetailPage = () => {
                                 {size}
                             </button>
                         ))}
-
                         <div>
-                            <button className='mt-8 bg-black text-white px-6 py-3 rounded-lg cursor-pointer' onClick={() => addtoCart(product)}>
+                            <button className={`mt-8 px-6 py-3 rounded-lg text-white transition-all
+                                ${selectedSize ?
+                                    "bg-black hover:opacity-90 cursor-pointer"
+                                    : "bg-gray-400 cursor-not-allowed"
+                                }`} onClick={handleToCart} disabled={!selectedSize}>
                                 Add To Cart
                             </button>
                             <p className='text-gray-600 mt-10 w-[80%]'>
