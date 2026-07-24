@@ -1,24 +1,30 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import LoginDetails from '../Components/LoginDetails'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import LoginDetails from '../Components/LoginDetails';
 
 const LoginPage = () => {
     return (
-        <div className='flex min-h-screen w-full bg-gray-200 items-center justify-center p-5'>
-            <div className='flex flex-col text-black h-full w-full justify-center items-center'>
-                <h2 className='text-4xl font-bold text-center mb-10'>Welcome to our store!</h2>
-                <p className='text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+        <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-center p-4">
+            {/* Top Brand Link */}
+            <div className="mb-6">
+                <Link to="/" className="text-2xl font-bold text-gray-900 hover:opacity-80 transition-opacity">
+                    Ecommerce
+                </Link>
             </div>
-            <div className=' container w-[800px] min-h-[450px] h-auto bg-white rounded-2xl shadow-[5px_10px_20px_0px_rgba(0,0,0,0.1)] overflow-hidden border-gray-300 mr-20'>
-                <div className='flex justify-center items-center p-3 mt-6 mb-3'>
-                    <Link to="/" className='p-2 text-black font-semibold text-2xl'>Ecommerce</Link>
-                </div>
-                <div className='flex w-full h-full gap-5'>
-                    <LoginDetails />
-                </div>
+
+            {/* Auth Card Container */}
+            <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <LoginDetails />
+            </div>
+
+            {/* Back to store bottom link */}
+            <div className="mt-6">
+                <Link to="/" className="text-xs text-gray-500 hover:text-gray-900 transition-colors">
+                    ← Back to store
+                </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default LoginPage
+export default LoginPage;

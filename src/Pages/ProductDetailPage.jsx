@@ -1,128 +1,208 @@
-import React from 'react'
-import { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
-import products from '../Data/products'
-import Navbar from '../Components/Navbar'
-import Footer from '../Components/Footer'
-import { CartContext } from '../Context/CartContext.jsx'
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import products from '../Data/products';
+import Navbar from '../Components/Navbar';
+import Footer from '../Components/Footer';
+import { CartContext } from '../Context/CartContext.jsx';
+import { FaCheck, FaCartShopping, FaTruckFast, FaShieldHalved, FaRotateLeft } from 'react-icons/fa6';
+
 const ProductDetailPage = () => {
-    const navigate = useNavigate()
-    const [selectedSize, setSelectedSize] = useState("")
-    const { id } = useParams()
-    const product = products.find((item) => item.id == id)
-    const { addtoCart } = useContext(CartContext)
-    const handleProductClick = (id) => {
-        navigate(`/product/${id}`)
-        useEffect(() => {
-            window.scrollTo(0, 0);
-        }, [id]);
-    }
-    const relatedProducts = products.filter(
-        (item) =>
-            item.category === product.category &&
-            item.id !== product.id
-    );
-    const handleToCart = () => {
-        if (!selectedSize) {
-            alert("Select Size !")
-            return
-        }
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const [selectedSize, setSelectedSize] = useState('M');
+    const [quantity, setQuantity] = useState(1);
+    const [addedToast, setAddedToast] = useState(false);
+
+    const product = products.find((item) => String(item.id) === String(id)) || products[0];
+    const { addtoCart } = useContext(CartContext);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [id]);
+
+    const relatedProducts = products.filter((item) => String(item.id) !== String(product.id));
+
+    const handleAddToCart = () => {
         addtoCart({
             ...product,
             size: selectedSize,
-            quantity: 1
+            quantity: quantity
         });
-    }
+        setAddedToast(true);
+        setTimeout(() => setAddedToast(false), 2000);
+    };
+
     return (
-        <div className='min-h-screen w-full gap-10'>
+        <div className="min-h-screen w-full bg-white flex flex-col justify-between">
             <Navbar />
-            <div className='px-10 top-0 mt-3'>
-                <div className='grid md:grid-cols-2 gap-10 ml-4'>
-                    <img
-                        src={product.image}
-                        alt={product.name}
-                        className='w-full max-w-[500px] h-auto object-cover rounded-xl ml-10'
-                    />
-                    <div className='w-full mt-8'>
-                        <h1 className='text-4xl font-semibold'>
-                            {product.name}
-                        </h1>
-                        <p className='text-2xl text-green-600 mt-4'>
-                            {product.price}
-                        </p>
-                        <p className='text-sm text-gray-500 mt-2'>
-                            incl. of taxes
-                            <span   >
-                                (Also includes all applicable duties)
-                            </span>
-                        </p>
-                        <p className='mt-5 text-gray-600'>
-                            Size
-                        </p>
-                        {['S', 'M', 'L', 'XL'].map((size) => (
-                            <button
-                                key={size}
-                                className={`border border-gray-400 px-3 py-1 rounded-md text-sm cursor-pointer hover:bg-black hover:text-white transition mt-3 mr-2 ${size === selectedSize ? 'bg-black text-white' : ''}`}
-                                onClick={() => {
-                                    setSelectedSize(size),
-                                        window.scrollTo(0, 0)
-                                }}
-                                style={{
-                                    backgroundColor: size === selectedSize ? 'black' : 'white',
-                                    color: size === selectedSize ? 'white' : 'black',
-                                }}
-                            >
-                                {size}
-                            </button>
-                        ))}
+
+            {/* Notification Toast */}
+            {addedToast && (
+                <div className="fixed top-20 right-5 z-50 p-4 bg-black text-white rounded-xl shadow-2xl flex items-center gap-3 animate-fadeIn">
+                    <div className="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs">
+                        <FaCheck />
+                    </div>
+                    <div>
+                        <h4 className="text-xs font-bold">Added to Cart!</h4>
+                        <p className="text-[11px] text-gray-300">{product.name} ({selectedSize}) x {quantity}</p>
+                    </div>
+                </div>
+            )}
+
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+                {/* Breadcrumb */}
+                <div className="text-xs text-gray-500 mb-6 flex items-center gap-2">
+                    <span onClick={() => navigate('/')} className="hover:text-black cursor-pointer">Home</span>
+                    <span>/</span>
+                    <span onClick={() => navigate('/products')} className="hover:text-black cursor-pointer">Products</span>
+                    <span>/</span>
+                    <span className="text-gray-900 font-semibold">{product.name}</span>
+                </div>
+
+                {/* Main Product Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+                    {/* Left: Product Image */}
+                    <div className="w-full aspect-4/5 rounded-2xl overflow-hidden bg-gray-100 border border-gray-100 shadow-xs">
+                        <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+
+                    {/* Right: Product Details */}
+                    <div className="flex flex-col justify-between">
                         <div>
-                            <button className={`mt-8 px-6 py-3 rounded-lg text-white transition-all
-                                ${selectedSize ?
-                                    "bg-black hover:opacity-90 cursor-pointer"
-                                    : "bg-gray-400 cursor-not-allowed"
-                                }`} onClick={handleToCart} disabled={!selectedSize}>
-                                Add To Cart
-                            </button>
-                            <p className='text-gray-600 mt-10 w-[80%]'>
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut molestias magni saepe blanditiis aliquid nulla tempore aperiam, pariatur aspernatur, nam possimus officia sapiente quod repudiandae.
-                                Premium quality t-shirt with stylish design and comfortable fabric.
-                            </p>
+                            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+                                {product.name}
+                            </h1>
+                            
+                            <div className="flex items-center gap-3 mt-3">
+                                <span className="text-3xl font-extrabold text-gray-900">{product.price}</span>
+                                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                                    In Stock
+                                </span>
+                            </div>
+                            <p className="text-xs text-gray-400 mt-1">Inclusive of all taxes & duties.</p>
+
+                            <hr className="my-6 border-gray-100" />
+
+                            {/* Size Selection */}
+                            <div className="mb-6">
+                                <label className="block text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2">
+                                    Select Size
+                                </label>
+                                <div className="flex gap-2">
+                                    {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                                        <button
+                                            key={size}
+                                            type="button"
+                                            onClick={() => setSelectedSize(size)}
+                                            className={`w-12 h-12 rounded-xl text-sm font-semibold border transition-all cursor-pointer ${
+                                                selectedSize === size
+                                                    ? 'border-black bg-black text-white shadow-sm'
+                                                    : 'border-gray-200 bg-white text-gray-800 hover:border-gray-400'
+                                            }`}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Quantity Selection */}
+                            <div className="mb-6">
+                                <label className="block text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2">
+                                    Quantity
+                                </label>
+                                <div className="flex items-center gap-3 w-fit border border-gray-200 rounded-xl p-1">
+                                    <button
+                                        onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                                        className="w-9 h-9 flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer text-base font-bold"
+                                    >
+                                        -
+                                    </button>
+                                    <span className="w-8 text-center font-bold text-sm">{quantity}</span>
+                                    <button
+                                        onClick={() => setQuantity((prev) => prev + 1)}
+                                        className="w-9 h-9 flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer text-base font-bold"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={handleAddToCart}
+                                    className="flex-1 py-3.5 px-6 rounded-xl bg-black hover:bg-gray-800 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
+                                >
+                                    <FaCartShopping />
+                                    <span>Add to Cart</span>
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        handleAddToCart();
+                                        navigate('/checkout');
+                                    }}
+                                    className="px-6 py-3.5 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-900 font-semibold text-sm transition-colors cursor-pointer"
+                                >
+                                    Buy Now
+                                </button>
+                            </div>
+
+                            {/* Product Badges */}
+                            <div className="grid grid-cols-3 gap-3 mt-8 pt-6 border-t border-gray-100 text-center">
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <FaTruckFast className="mx-auto text-lg text-gray-700 mb-1" />
+                                    <p className="text-[11px] font-medium text-gray-700">Free Shipping</p>
+                                </div>
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <FaShieldHalved className="mx-auto text-lg text-gray-700 mb-1" />
+                                    <p className="text-[11px] font-medium text-gray-700">Secure Payment</p>
+                                </div>
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <FaRotateLeft className="mx-auto text-lg text-gray-700 mb-1" />
+                                    <p className="text-[11px] font-medium text-gray-700">7 Days Return</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="related-products mt-12 mb-6 ml-12 px-4">
-                <h2 className="text-2xl font-bold mb-6">
-                    You May Also Like
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {relatedProducts.slice(0, 4).map((item) => (
-                        <div
-                            key={item.id}
-                            className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
-                        >
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-[350px] object-cover"
-                                onClick={() => handleProductClick(item.id)}
-                            />
-                            <div className="p-4">
-                                <h3 className="font-semibold text-lg">
-                                    {item.name}
-                                </h3>
-                                <p className="text-green-600 font-bold mt-2">
-                                    {item.price}
-                                </p>
+
+                {/* Related Products */}
+                <div className="mt-16 pt-10 border-t border-gray-100">
+                    <h2 className="text-xl font-bold text-gray-900 mb-6">You May Also Like</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        {relatedProducts.slice(0, 4).map((item) => (
+                            <div
+                                key={item.id}
+                                onClick={() => navigate(`/product/${item.id}`)}
+                                className="group bg-white rounded-xl border border-gray-100 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300"
+                            >
+                                <div className="aspect-4/5 overflow-hidden bg-gray-100">
+                                    <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                </div>
+                                <div className="p-3">
+                                    <h3 className="font-semibold text-sm text-gray-900 group-hover:text-black line-clamp-1">
+                                        {item.name}
+                                    </h3>
+                                    <p className="text-sm font-bold text-gray-900 mt-1">{item.price}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </main>
+
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default ProductDetailPage
+export default ProductDetailPage;
